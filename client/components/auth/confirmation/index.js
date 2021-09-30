@@ -267,7 +267,7 @@ constructor (props) {
                                 onFulfill={this.checkCode}
                             />
                         <View style={styles.centered}>
-                            <Text style={styles.emailText}>Please view the email we sent to the prvoided email and enter the verification code which is typically 7-8 characters long in length.</Text>
+                            <Text style={styles.emailText}>Please view the email we sent to the provided email and enter the verification code which is typically 7-8 characters long in length.</Text>
                             <Image source={require("../../../assets/icons/email.png")} style={styles.emailIcon} />
                         </View>
                     </View>

@@ -605,19 +605,14 @@ const styles = StyleSheet.create({
 
 });
 const mapStateToProps = (state) => {
-
-  console.log("STATE!!!!:", state);
-
   if (state.signupData.authData) {
     if (isEmpty(state.signupData.authData)) {
-      console.log("empty!");
       return {
         introCompleted: state.intro.completed,
         unique_id: null,
         authData: null
       }
     } else {
-      console.log("Successfully ran props...!");
       return {
         introCompleted: state.intro.completed,
         authData: state.signupData.authData,
@@ -626,7 +621,6 @@ const mapStateToProps = (state) => {
       }
     }
   } else {
-    console.log("AuthData Doesn't exist...");
     return {
       introCompleted: state.intro.completed,
       authenticated: state.signupData.authenticated,

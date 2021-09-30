@@ -19,7 +19,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
         collection.aggregate([
             { $project: { "name" : { $concat : [ "$firstName", " ", "$lastName" ] }, username: 1, firstName: 1, lastName: 1, unique_id: 1, birthdate: 1, accountType: 1 }},
             { $match: { "name": { $regex: query.toLowerCase() }}}
-        ]).limit(20).toArray((err, users) => {
+        ]).limit(40).toArray((err, users) => {
             if (users) {
                 console.log("users", users);
 

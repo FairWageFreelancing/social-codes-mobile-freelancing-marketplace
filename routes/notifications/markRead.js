@@ -39,18 +39,22 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                     userId: notify.from
                                 }
                             }).then((res) => {
-                                
-                                const { accountType, username, firstName, lastName, birthdate } = res.data.user;
+
+                                if (res.data.message === "User could NOT be found.") {
+                                    resolve(null);
+                                } else {
+                                    const { accountType, username, firstName, lastName, birthdate } = res.data.user;
         
-                                notify.accountType = accountType;
-                                notify.username = username;
-                                notify.firstName = firstName;
-                                notify.lastName = lastName;
-                                notify.birthdate = birthdate;
-                                notify.photo = _.has(res.data.user, 'photo') ? res.data.user.photo : null;
-                                notify.profilePics = _.has(res.data.user, "profilePics") ? res.data.user.profilePics : null;
-    
-                                resolve(notify);
+                                    notify.accountType = accountType;
+                                    notify.username = username;
+                                    notify.firstName = firstName;
+                                    notify.lastName = lastName;
+                                    notify.birthdate = birthdate;
+                                    notify.photo = _.has(res.data.user, 'photo') ? res.data.user.photo : null;
+                                    notify.profilePics = _.has(res.data.user, "profilePics") ? res.data.user.profilePics : null;
+        
+                                    resolve(notify);
+                                }
                             }).catch((err) => {
                                 console.log(err);
     
@@ -68,17 +72,21 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                 }
                             }).then((res) => {
                                 
-                                const { accountType, username, firstName, lastName, birthdate } = res.data.user;
+                                if (res.data.message === "User could NOT be found.") {
+                                    resolve(null);
+                                } else {
+                                    const { accountType, username, firstName, lastName, birthdate } = res.data.user;
         
-                                notify.accountType = accountType;
-                                notify.username = username;
-                                notify.firstName = firstName;
-                                notify.lastName = lastName;
-                                notify.birthdate = birthdate;
-                                notify.photo = _.has(res.data.user, 'photo') ? res.data.user.photo : null;
-                                notify.profilePics = _.has(res.data.user, "profilePics") ? res.data.user.profilePics : null;
-    
-                                resolve(notify);
+                                    notify.accountType = accountType;
+                                    notify.username = username;
+                                    notify.firstName = firstName;
+                                    notify.lastName = lastName;
+                                    notify.birthdate = birthdate;
+                                    notify.photo = _.has(res.data.user, 'photo') ? res.data.user.photo : null;
+                                    notify.profilePics = _.has(res.data.user, "profilePics") ? res.data.user.profilePics : null;
+        
+                                    resolve(notify);
+                                }
                             }).catch((err) => {
                                 console.log(err);
     
@@ -92,10 +100,31 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                 }
 
                 Promise.all(promises).then((values) => {
-                    res.json({
-                        message: "Marked!",
-                        notifications: values
-                    })
+
+                    const notties = [];
+
+                    for (let index = 0; index < values.length; index++) {
+                        const notificationnn = values[index];
+                        
+                        if (notificationnn !== null) {
+                            
+                            notties.push(notificationnn);
+
+                            if ((values.length - 1) === index) {
+                                res.json({
+                                    message: "Marked!",
+                                    notifications: notties
+                                })
+                            }
+                        } else {
+                            if ((values.length - 1) === index) {
+                                res.json({
+                                    message: "Marked!",
+                                    notifications: notties
+                                })
+                            }
+                        }
+                    }
                 })
             } else {
                 res.json({

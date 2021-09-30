@@ -216,7 +216,7 @@ constructor(props) {
                             this.props.props.navigation.goBack();
                         }} transparent>
                             <Icon style={{ color: "#ffffff" }} name='arrow-back' />
-                                {Platform.OS === "ios" ? <NativeText style={{ color: "black" }}>Back</NativeText> : null}
+                                {Platform.OS === "ios" ? <NativeText style={{ color: "#ffffff" }}>Back</NativeText> : null}
                         </Button>
                     </Left>
                     <Body>
@@ -231,6 +231,7 @@ constructor(props) {
                 </Header>
                 <Toast ref={(ref) => Toast.setRef(ref)} />
                 <ScrollView contentContainerStyle={{ paddingBottom: 50 }} style={styles.container}>
+                    <AwesomeButtonBlue borderColor={"#cccccc"} borderWidth={2} style={{ marginTop: 10 }} progress type={"anchor"} backgroundColor={"#ffffff"} backgroundPlaceholder={"black"} backgroundProgress={"black"} textColor={"black"} shadowColor={"grey"} onPress={() => {}} stretch={true}>Create question via website</AwesomeButtonBlue>
                     <View style={styles.margin}>
                         <Text style={styles.accordianTitleText}>Step 1. Draft your question</Text>
                         <Text style={styles.accordianSubText}>The community is here to help you with specific coding, algorithm, or language problems.</Text>

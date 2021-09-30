@@ -135,6 +135,7 @@ app.use("/send/friend/request", require("./routes/friends/sendFriendRequest/send
 app.use("/post/wall/post", require("./routes/wall/newWallPost/newWallPost.js"));
 app.use("/gather/all/wall/posts", require("./routes/wall/gatherPosts/gatherAllWallPosts.js"));
 app.use("/gather/breif/information/about/user", require("./routes/wall/gatherPosts/gatherUserInformationBrief.js"));
+app.use("/gather/breif/information/about/user/notifications", require("./routes/notifications/gatherNotificationInfoBrief.js"));
 app.use("/gather/notifications", require("./routes/notifications/gather.js"));
 app.use("/gather/user/pending/requests", require("./routes/friends/pending/getPendingRequestInfo.js"));
 app.use("/add/friend", require("./routes/friends/newFriends/addFriend.js"));
@@ -247,7 +248,6 @@ app.use("/leave/conversation/only/individual", require("./routes/messaging/group
 app.use("/add/additional/users/group/chat", require("./routes/messaging/group/add/addAdditionalMembers.js"));
 app.use("/ban/user/conversation", require("./routes/messaging/group/ban/banUserGroupChat.js"));
 app.use("/update/account/with/coupon/code", require("./routes/account/coupons/new/addNewCoupon.js"));
-
 
 
 

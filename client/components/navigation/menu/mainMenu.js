@@ -399,6 +399,13 @@ constructor(props) {
                                         <Text style={styles.largeSized}>Completed Jobs</Text>
                                         <Text style={styles.sub}>View your already completed jobs/gigs</Text>
                                     </TouchableOpacity> : null}
+                                    {/* <TouchableOpacity onPress={() => {
+                                        this.props.props.navigation.push("group-video-calling-interviewing");
+                                    }} style={styles.shortView}>
+                                        <Image source={require("../../../assets/icons/group-video.png")} style={[styles.shortViewIcon, { tintColor: "#141414" }]} />
+                                        <Text style={styles.largeSized}>Group Video Calling</Text>
+                                        <Text style={styles.sub}>Setup/Participate in group video calling</Text>
+                                    </TouchableOpacity> */}
                                     {/* <View style={styles.shortView}>
                                         
                                     </View> */}

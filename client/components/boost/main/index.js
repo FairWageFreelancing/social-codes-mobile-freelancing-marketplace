@@ -17,7 +17,9 @@ const { height, width } = Dimensions.get("window");
 
 const employerBoost = Platform.select({
     ios: [
-        
+        '23948729587249875394757577777757474', // - one boost - $14.99 profile job listing
+        '1818177162361535253455253545355555555', // two boosts for $24.99 total
+        '0001019348283482900000292828' // three boosts for $39.99 total
     ],
     android: [
         "239487293874923658276",
@@ -28,7 +30,9 @@ const employerBoost = Platform.select({
 
 const freelancerBoosts = Platform.select({
     ios: [
-     
+        '2304982384888888333363666253138642', // 1 freelancer boost - $14.99
+        '00099876554325677892992222333111', // 3 freelancer profile boosts $24.99
+        '23842293928374972347293784298374777777777' // 5 freelancer profile boosts $42.99
     ],
     android: [
         '203948092009029',
@@ -37,11 +41,11 @@ const freelancerBoosts = Platform.select({
     ]
 });
 
-const itemSkus = Platform.OS === "ios" ? [] : [
-    "239487293874923658276",
-    "23948729356364566666235437",
-    "2384273472636263466255252"
-];
+// const itemSkus = Platform.OS === "ios" ? [] : [
+//     "239487293874923658276",
+//     "23948729356364566666235437",
+//     "2384273472636263466255252"
+// ];
 
 class BoostHomepageHelper extends Component {
 constructor(props) {
@@ -67,13 +71,20 @@ constructor(props) {
     async componentDidMount() {
 
         try {
-          const result = await RNIap.initConnection().then(async () => {
-            this.getItems();
+            try {
+                const result = await RNIap.initConnection();
 
-            const result = await RNIap.flushFailedPurchasesCachedAsPendingAndroid();
-            console.log("ran...", result);
-          });
-          console.log('connection is => ', result);
+                console.log('connection is => ', result);
+
+                if (result === true) {
+                    this.getItems();
+                }
+                
+                await RNIap.flushFailedPurchasesCachedAsPendingAndroid();
+
+            } catch (err) {
+                console.log('error in cdm => ', err);
+            }
           
         } catch (err) {
           console.log('error in cdm => ', err);
@@ -107,16 +118,20 @@ constructor(props) {
     };
     requestPurchase = async (sku) => {
         try {
-          const purchase = RNIap.requestPurchase(sku);
+          await RNIap.requestPurchase(sku).then((result) => {
+            console.log("result:", result);
 
-          console.log("purchase", purchase);
+            if (result) {
+                this.purchaseConfirmed(result.productId);
+            }
+          });
         } catch (err) {
           console.log('requestPurchase error => ', err);
         }
-    };
+    };  
     getItems = async () => {
         try {
-            const products = await RNIap.getProducts(itemSkus);
+            const products = (this.props.accountType === "hire" ? await RNIap.getProducts(employerBoost) : await RNIap.getProducts(freelancerBoosts));
 
             console.log("products", products);
 
@@ -159,7 +174,7 @@ constructor(props) {
                                         }} style={boostFreelancer === "1-boost" ? [styles.column, { borderTopColor: "#ffffff", borderTopWidth: 10, borderBottomColor: "#ffffff", borderBottomWidth: 10 }] : [styles.column, { borderTopColor: "blue", borderTopWidth: 10, borderBottomColor: "blue", borderBottomWidth: 10 }]}>
                                             <Text style={styles.boostText}>1 {"\n"} Boost</Text>
                                             <View />
-                                            <Text style={styles.priceText}>$14.99/ea</Text>
+                                            <Text style={styles.priceText}>$14.99/total</Text>
                                         </TouchableOpacity>
                                         <TouchableOpacity onPress={() => {
                                             this.setState({
@@ -168,7 +183,7 @@ constructor(props) {
                                         }} style={boostFreelancer === "3-boosts" ? [styles.column, { height: 200, marginTop: 0, borderTopColor: "#ffffff", borderTopWidth: 10, borderBottomColor: "#ffffff", borderBottomWidth: 10 }] : [styles.column, { height: 200, marginTop: 0, borderTopColor: "#8884FF", borderTopWidth: 10, borderBottomColor: "#8884FF", borderBottomWidth: 10 }]}>
                                             <Text style={styles.boostText}>3 {"\n"} Boosts</Text>
                                             <View />
-                                            <Text style={styles.priceText}>$24.49/ea</Text>
+                                            <Text style={styles.priceText}>$24.49/total</Text>
                                         </TouchableOpacity>
                                         <TouchableOpacity onPress={() => {
                                             this.setState({
@@ -177,7 +192,7 @@ constructor(props) {
                                         }} style={boostFreelancer === "5-boosts" ? [styles.column, { borderTopColor: "#ffffff", borderTopWidth: 10, borderBottomColor: "#ffffff", borderBottomWidth: 10 }] : [styles.column, { borderTopColor: "blue", borderTopWidth: 10, borderBottomColor: "blue", borderBottomWidth: 10 }]}>
                                             <Text style={styles.boostText}>5 {"\n"} Boosts</Text>
                                             <View />
-                                            <Text style={styles.priceText}>$49.99/ea</Text>
+                                            <Text style={styles.priceText}>$42.99/total</Text>
                                         </TouchableOpacity>
                                     </View>
                                 </View>
@@ -236,7 +251,7 @@ constructor(props) {
                                         }} style={boostEmployerAccount === "1-boost" ? [styles.column, { borderTopColor: "#ffffff", borderTopWidth: 10, borderBottomColor: "#ffffff", borderBottomWidth: 10 }] : [styles.column, { borderTopColor: "blue", borderTopWidth: 10, borderBottomColor: "blue", borderBottomWidth: 10 }]}>
                                             <Text style={styles.boostText}>1 {"\n"} Boost</Text>
                                             <View />
-                                            <Text style={styles.priceText}>$14.99/ea</Text>
+                                            <Text style={styles.priceText}>$14.99/total</Text>
                                         </TouchableOpacity>
                                         <TouchableOpacity onPress={() => {
                                             this.setState({
@@ -245,7 +260,7 @@ constructor(props) {
                                         }} style={boostEmployerAccount === "2-boosts" ? [styles.column, { height: 200, marginTop: 0, borderTopColor: "#ffffff", borderTopWidth: 10, borderBottomColor: "#ffffff", borderBottomWidth: 10 }] : [styles.column, { height: 200, marginTop: 0, borderTopColor: "#8884FF", borderTopWidth: 10, borderBottomColor: "#8884FF", borderBottomWidth: 10 }]}>
                                             <Text style={styles.boostText}>2 {"\n"} Boosts</Text>
                                             <View />
-                                            <Text style={styles.priceText}>$24.49/ea</Text>
+                                            <Text style={styles.priceText}>$24.49/total</Text>
                                         </TouchableOpacity>
                                         <TouchableOpacity onPress={() => {
                                             this.setState({
@@ -254,7 +269,7 @@ constructor(props) {
                                         }} style={boostEmployerAccount === "3-boosts" ? [styles.column, { borderTopColor: "#ffffff", borderTopWidth: 10, borderBottomColor: "#ffffff", borderBottomWidth: 10 }] : [styles.column, { borderTopColor: "blue", borderTopWidth: 10, borderBottomColor: "blue", borderBottomWidth: 10 }]}>
                                             <Text style={styles.boostText}>3 {"\n"} Boosts</Text>
                                             <View />
-                                            <Text style={styles.priceText}>$49.99/ea</Text>
+                                            <Text style={styles.priceText}>$39.99/total</Text>
                                         </TouchableOpacity>
                                     </View>
                                 </View>

@@ -56,7 +56,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                                 body: `Subject: ${subject} \n \nMessage: ${message}`
                             },
                             from: user,
-                            link: "notifications"
+                            link: "private-message"
                         };
         
                         axios.post("https://fcm.googleapis.com/fcm/send", {

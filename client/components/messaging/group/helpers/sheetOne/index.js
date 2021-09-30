@@ -451,7 +451,7 @@ const SheetOptionsHelper = ({ sheetRefActions, conversation, unique_id, groupMem
                                 <List>
                                     {typeof selected !== "undefined" && selected.length > 0 ? selected.map((item, index) => {
                                         return (
-                                            <Fragment>
+                                            <Fragment key={index}>
                                                 <ListItem button={true} onPress={() => {
                                                     setSelected(selected.filter((select, indexxxxx) => {
                                                         if (select.unique_id !== item.unique_id) {

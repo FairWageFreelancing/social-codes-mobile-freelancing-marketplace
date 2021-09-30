@@ -154,6 +154,8 @@ constructor(props) {
 
                     } else if (notification.link === "reviews") {
                         
+                    } else if (notification.link === "private-message") {
+                        this.props.props.navigation.push("messaging-conversations");
                     }
                 })
             } else {

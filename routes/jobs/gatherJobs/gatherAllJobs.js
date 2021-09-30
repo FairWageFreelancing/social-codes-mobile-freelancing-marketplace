@@ -20,9 +20,9 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
         collection.aggregate(
             [
                 { "$match": { "unique_id": { "$nin": alreadyPooled }}},
-                { "$sample": { size: 5 } } 
+                { "$sample": { size: 40 } } 
             ]
-        ).limit(5).toArray((err, jobs) => {
+        ).limit(40).toArray((err, jobs) => {
             if (err) {
                 console.log(err);
 

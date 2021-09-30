@@ -23,32 +23,37 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                 const promises = [];
 
                 if (typeof user.notifications !== "undefined" && user.notifications.length > 0) {
+
                     for (let index = 0; index < user.notifications.length; index++) {
                         const notification = user.notifications[index];
                         
     
                         const promiseee = new Promise((resolve, reject) => {
-                            axios.get(`${config.get("ngrok_url")}/gather/breif/information/about/user`, {
+                            axios.get(`${config.get("ngrok_url")}/gather/breif/information/about/user/notifications`, {
                                 params: {
                                     userId: notification.from
                                 }
                             }).then((res) => {
                                 
-                                const { accountType, username, firstName, lastName, birthdate } = res.data.user;
+                                if (res.data.message === "User could NOT be found.") {
+                                    resolve(null);
+                                } else {
+                                    const { accountType, username, firstName, lastName, birthdate } = res.data.user;
     
-                                notification.accountType = accountType;
-                                notification.username = username;
-                                notification.firstName = firstName;
-                                notification.lastName = lastName;
-                                notification.birthdate = birthdate;
-                                notification.photo = _.has(res.data.user, 'photo') ? res.data.user.photo : null;
-                                notification.profilePics = _.has(res.data.user, "profilePics") ? res.data.user.profilePics : null;
-    
-                                resolve(notification);
+                                    notification.accountType = accountType;
+                                    notification.username = username;
+                                    notification.firstName = firstName;
+                                    notification.lastName = lastName;
+                                    notification.birthdate = birthdate;
+                                    notification.photo = _.has(res.data.user, 'photo') ? res.data.user.photo : null;
+                                    notification.profilePics = _.has(res.data.user, "profilePics") ? res.data.user.profilePics : null;
+        
+                                    resolve(notification);
+                                }
                             }).catch((err) => {
                                 console.log(err);
     
-                                reject();
+                                resolve(null);
                             })
                         })
     
@@ -56,10 +61,31 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                     }
     
                     Promise.all(promises).then((values) => {
-                        res.json({
-                            message: "Gathered notifications!",
-                            notifications: values
-                        })
+
+                        const notties = [];
+
+                        for (let index = 0; index < values.length; index++) {
+                            const notificationnn = values[index];
+                            
+                            if (notificationnn !== null) {
+                                
+                                notties.push(notificationnn);
+
+                                if ((values.length - 1) === index) {
+                                    res.json({
+                                        message: "Gathered notifications!",
+                                        notifications: notties
+                                    })
+                                }
+                            } else {
+                                if ((values.length - 1) === index) {
+                                    res.json({
+                                        message: "Gathered notifications!",
+                                        notifications: notties
+                                    })
+                                }
+                            }
+                        }
                     })
                 } else {
                     res.json({

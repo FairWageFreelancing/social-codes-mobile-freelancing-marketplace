@@ -28,6 +28,7 @@ export default StyleSheet.create({
             width: 0,
             height: 12,
         },
+        maxWidth: "100%",
         shadowOpacity: 0.58,
         shadowRadius: 16.00,
         height: "80%",

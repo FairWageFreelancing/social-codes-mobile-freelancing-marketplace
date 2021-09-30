@@ -26,6 +26,16 @@ constructor(props) {
 }
     handleSearch = () => {
         console.log("handleSearch clicked");
+
+        const { searchValue, activeJobs, saved } = this.state;
+
+        this.setState({
+            activeJobs: saved.filter((item, index) => {
+                if (`${item.otherUserFirstName} ${item.otherUserLastName}`.includes(searchValue.toLowerCase())) {
+                    return item;
+                }
+            })
+        })
     }
     handleCancellation = () => {
         console.log("handleCancellation clicked");
@@ -43,6 +53,7 @@ constructor(props) {
 
                 this.setState({
                     activeJobs: activeHiredJobs,
+                    saved: activeHiredJobs,
                     user,
                     ready: true
                 })
@@ -123,6 +134,8 @@ constructor(props) {
                                                 onChangeText={(value) => {
                                                     this.setState({
                                                         searchValue: value
+                                                    }, () => {
+                                                        this.handleSearch();
                                                     })
                                                 }}
                                                 onSearchButtonPress={this.handleSearch}

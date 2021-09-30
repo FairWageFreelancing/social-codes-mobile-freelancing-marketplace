@@ -1225,7 +1225,7 @@ class PeopleBrowseListHelper extends Component {
                                     })
                                 }
                             }}
-                            contentContainerStyle={{ paddingBottom: 100 }}
+                            contentContainerStyle={{ paddingBottom: 200 }}
                             renderItem={({ item, index }) => {
                                 let fullName = item.firstName + ' ' + item.lastName;
                                     
@@ -1238,6 +1238,17 @@ class PeopleBrowseListHelper extends Component {
                                             <Body>
                                                 <Text>{fullName}</Text>
                                                 <Text style={{ color: "#ffffff" }} note numberOfLines={2}>Connect with {fullName} and send them a friend request!</Text>
+                                                <View style={styles.hrLine} />
+                                                <View style={{ flexDirection: "row", marginBottom: 5, marginTop: 5 }}>
+                                                    <View style={styles.columnCustom}>
+                                                        <Image style={styles.star} source={require("../../../assets/icons/star.png")} />
+                                                        <Text style={{ color: "#ffffff" }}>{Math.floor(Math.random() * 5) + 1} Reviews</Text>
+                                                    </View>
+                                                    <View style={styles.columnCustomTwo}>
+                                                        <Image style={styles.star} source={require("../../../assets/icons/checklist.png")} />
+                                                        <Text style={{ color: "#ffffff" }}>{Math.floor(Math.random() * 5) + 1} Jobs Completed</Text>
+                                                    </View>
+                                                </View>
                                                 <View style={{ flexDirection: "row", marginTop: 5 }}>
                                                     <Button onPress={() => {
                                                         this.setState({
@@ -1261,7 +1272,7 @@ class PeopleBrowseListHelper extends Component {
                             }}
                         />
                     </List> : <View><FlatList
-                    contentContainerStyle={{ flexDirection: "row", flexWrap: 'wrap' }}
+                    contentContainerStyle={{ flexDirection: "row", flexWrap: 'wrap', paddingBottom: 150 }}
                     data={users}
                     keyExtractor={(item) => item._id}
                     onEndReachedThreshold={0.1}

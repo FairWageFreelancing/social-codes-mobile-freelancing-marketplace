@@ -1,5 +1,7 @@
 
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
+
+const { width, height } = Dimensions.get("window");
 
 export default StyleSheet.create({
     container:{
@@ -23,6 +25,12 @@ export default StyleSheet.create({
         minHeight: 50, 
         height: 50
     },  
+    star: {
+        maxWidth: 20,
+        maxHeight: 20,
+        tintColor: "gold",
+        marginRight: 5
+    },
     list: {
         paddingHorizontal: 5,
         backgroundColor:"white",
@@ -30,12 +38,32 @@ export default StyleSheet.create({
     listContainer:{
         alignItems:'center'
     },
+    hrLine: {
+        borderBottomColor: "lightgrey",
+        borderBottomWidth: 1,
+        marginBottom: 5,
+        marginTop: 5
+    },
     avatar: {
         borderRadius: 40,
         minWidth: 45,
         minHeight: 45,
         maxHeight: 45,
         maxWidth: 45
+    },
+    columnCustom: {
+        width: width * 0.25,
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+        alignContent: "flex-start",
+        flexDirection: "row"
+    },  
+    columnCustomTwo: {
+        width: width * 0.40,
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+        alignContent: "flex-start",
+        flexDirection: "row"
     },
     /******** card **************/
     card:{

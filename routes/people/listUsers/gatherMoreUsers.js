@@ -22,7 +22,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
             collection.aggregate(
                 [
                     { $match: { unique_id: { $nin: alreadyPooled }}},
-                    { $sample: { size: 10 } },
+                    { $sample: { size: 40 } },
                     { $project: {
                         "loginPassword": 0,
                         "cometChatAuthToken": 0,  
@@ -39,7 +39,7 @@ mongo.connect(config.get("mongoURI"),  { useNewUrlParser: true }, { useUnifiedTo
                         "cardPaymentMethods": 0
                     }}
                 ]
-            ).limit(10).toArray((err, people) => {
+            ).limit(40).toArray((err, people) => {
                 if (err) {
                     console.log(err);
     
