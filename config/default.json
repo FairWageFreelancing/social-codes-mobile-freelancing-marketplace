@@ -17,7 +17,7 @@
     "commetChatAuthKey": "",
     "firebaseCloudMessagingServerKey": "",
     "logoImage": "https://s3.us-east-1.wasabisys.com/social-codes-usa/fairwage-freelancing/a9073440-bd4e-4254-b2e1-13f6b070556e",
-    "stripePublishableKey": "pk_test_51JBRSTAWa4IdqvYkhjS9jT0hU7Ob9vTA5sBltDPK9TleKbgHwuUSnyPZAMohIEBGIkHGBEv4ctEUOYsl8RMRh9Um00Kyinx4zE",
+    "stripePublishableKey": "",
     "stripeSecretKey": "",
     "stripeWebhookSigningSecret": "",
     "emsiSkillsAPIClientID": "",
